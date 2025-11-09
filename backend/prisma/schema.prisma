@@ -5,11 +5,43 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// --- Models used by the application ---
+model BankAccount {
+  id                       Int      @id @default(autoincrement())
+  bankName                 String
+  encryptedAccountNumber   String
+  balance                  Float
+  userId                   Int
+  createdAt                DateTime @default(now())
+}
+
+model CBTransaction {
+  id           Int      @id @default(autoincrement())
+  operator     String
+  type         String
+  quantity     Float
+  pricePerUnit Float?
+  totalValue   Float?
+  createdAt    DateTime @default(now())
+}
+
+model Route {
+  id               Int      @id @default(autoincrement())
+  name             String
+  fromPort         String
+  toPort           String
+  distanceNm       Float
+  fuelType         String
+  emissionsCO2Ton  Float
+  operator         String
+  createdAt        DateTime @default(now())
 }
